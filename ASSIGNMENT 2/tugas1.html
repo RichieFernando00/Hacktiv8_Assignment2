@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form Password</title>
+        <style>
+            .contents{
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                border-width:2px;
+                padding : 8px;
+            }
+ 
+            .form-element{
+                margin: 8px;
+                align-items: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="contents">
+            <h2 align="center"><b>Form Cek Password</b></h2>
+            <div class="formContent">
+                <form id="formPassword" autocomplete="off">
+                    <div class="form-element" id="fieldPassword">
+                        <label for="password">Tulis <i>Password</i> :</label><br>
+                        <input id="inputPassword" type="text" name="password" placeholder="Tulis password di sini" maxlength="10"><br>
+                        <label id="notifikasiSisaKarakter">Sisa karakter : <span id="sisaKarakter"></span></label>
+                        <p>Tekan Enter pada keyboard jika sudah selesai menulis <i>password</i> atau klik <i>submit</i></p>
+                    </div>
+                    <div class="form-element" align= "center">
+                        <input id="submitButton" type="submit" value="Submit Data">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (){
+                const inputMaxLengthOnLoad = document.getElementById("inputPassword").maxLength;
+                document.getElementById("sisaKarakter").innerText = inputMaxLengthOnLoad;
+            });
+
+            document.getElementById("inputPassword").addEventListener("input", function(){
+            const jumlahKarakterDiketik = document.getElementById("inputPassword").value.length;
+            const jumlahKarakterMaksimal = document.getElementById("inputPassword").maxLength;
+            console.log(jumlahKarakterDiketik, jumlahKarakterMaksimal);
+            const sisaKarakterUpdate = jumlahKarakterMaksimal - jumlahKarakterDiketik;
+            document.getElementById("sisaKarakter").innerText = sisaKarakterUpdate;
+            if (sisaKarakterUpdate == 0 ){
+                document.getElementById("sisaKarakter").innerText = "batas maksimal tercapai!";
+            } else if(sisaKarakterUpdate <= 5){
+                document.getElementById("notifikasiSisaKarakter").style.color = "red";
+            } else{
+                document.getElementById("notifikasiSisaKarakter").style.color = "black";
+            }
+            });
+
+            document.getElementById("formPassword").addEventListener("submit", function(){
+            const inputPassword = document.getElementById("inputPassword").value;
+            if (inputPassword == "RICHIE"){
+                alert("Selamat! PASSWORD yang anda masukkan benar :D");
+            } else{
+                event.preventDefault();
+                window.location.href ="https://www.google.com/";
+            }
+            });
+        </script>
+    </body>
+</html>

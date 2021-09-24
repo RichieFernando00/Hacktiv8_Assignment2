@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form Score</title>
+        <style>
+            .contents{
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                border-width:2px;
+                padding : 8px;
+            }
+ 
+            .form-element{
+                margin: 8px;
+                align-items: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="contents">
+            <h2 align="center"><b>Form Cek Grade Score Anda</b></h2>
+            <div class="formContent">
+                <form id="formScore" autocomplete="off">
+                    <div class="form-element" id="fieldPassword">
+                        <label for="password">Tulis <i>Score</i> :</label><br>
+                        <input id="inputScore" type="text" name="password" placeholder="Tulis password di sini" maxlength="6"><br>
+                        <label id="notifikasiSisaKarakter">Sisa karakter : <span id="sisaKarakter"></span></label>
+                        <p>Tekan Enter pada keyboard jika sudah selesai menulis <i>score</i> atau klik <i>submit</i></p>
+                    </div>
+                    <div class="form-element" align= "center">
+                        <input id="submitButton" type="submit" value="Submit Data">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (){
+                const inputMaxLengthOnLoad = document.getElementById("inputScore").maxLength;
+                document.getElementById("sisaKarakter").innerText = inputMaxLengthOnLoad;
+            });
+
+            document.getElementById("inputScore").addEventListener("input", function(){
+            const jumlahKarakterDiketik = document.getElementById("inputScore").value.length;
+            const jumlahKarakterMaksimal = document.getElementById("inputScore").maxLength;
+            console.log(jumlahKarakterDiketik, jumlahKarakterMaksimal);
+            const sisaKarakterUpdate = jumlahKarakterMaksimal - jumlahKarakterDiketik;
+            document.getElementById("sisaKarakter").innerText = sisaKarakterUpdate;
+            if (sisaKarakterUpdate == 0 ){
+                document.getElementById("sisaKarakter").innerText = "batas maksimal tercapai!";
+            } else if(sisaKarakterUpdate <= 4){
+                document.getElementById("notifikasiSisaKarakter").style.color = "red";
+            } else{
+                document.getElementById("notifikasiSisaKarakter").style.color = "black";
+            }
+            });
+
+            document.getElementById("formScore").addEventListener("submit", function(){
+            const inputScore = document.getElementById("inputScore").value;
+            if (inputScore <= 100 && inputScore >= 80){
+                event.preventDefault();
+                alert("your grade is A");
+            } else if (inputScore < 80 && inputScore >= 60){
+                event.preventDefault();
+                alert("your grade is B");
+            } else if (inputScore < 60 && inputScore >= 40){
+                event.preventDefault();
+                alert("your grade is C");
+            } else if (inputScore < 40 && inputScore >= 0){
+                event.preventDefault();
+                alert("your grade is D");
+            } else {
+                event.preventDefault();
+                alert("cannot calculate your grade");
+            }
+            });
+        </script>
+    </body>
+</html>
